@@ -9,7 +9,7 @@ public interface Repository {
 
     Employee getById(int id);
 
-    void updateById(int id, Employee employee);
+    void updateById(Employee employee);
 
-    void removeById(Employee employee);
+    void removeById(int id);
 }

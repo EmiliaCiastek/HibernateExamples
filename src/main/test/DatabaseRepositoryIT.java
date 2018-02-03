@@ -12,6 +12,8 @@ public class DatabaseRepositoryIT {
 
     private DatabaseRepository databaseRepository;
 
+    //TODO: add testCases -> few elements should be added to database for some tests
+
     @BeforeMethod
     public void setUp() {
         DatabaseRepository.openConnection();
@@ -73,5 +75,36 @@ public class DatabaseRepositoryIT {
         soft.assertThat(found.getFirstName()).isEqualTo(secondEmployee.getFirstName());
         soft.assertThat(found.getSalary()).isEqualTo(secondEmployee.getSalary());
         soft.assertAll();
+    }
+
+    @Test
+    public void should_update_element_with_provided_id(){
+        Employee firstEmployee = new Employee("First", 1000.0);
+        Employee secondEmployee = new Employee("Second", 2000.0);
+        Collection<Employee> employeesToAdd = Arrays.asList(firstEmployee, secondEmployee);
+        databaseRepository.addAll(employeesToAdd);
+
+        int idToUpdate = 2;
+
+        Employee updatedEmployee = new Employee(idToUpdate, "Second", 3000.0);
+        databaseRepository.updateById(updatedEmployee); //TODO: what if there is no such object in table?
+
+        Employee found = databaseRepository.getById(idToUpdate);
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(found.getId()).isEqualTo(idToUpdate);
+        soft.assertThat(found.getFirstName()).isEqualTo(updatedEmployee.getFirstName());
+        soft.assertThat(found.getSalary()).isEqualTo(updatedEmployee.getSalary());
+        soft.assertAll();
+    }
+
+    @Test
+    public void should_remove_element_with_provided_id(){
+        Employee firstEmployee = new Employee("First", 1000.0);
+        databaseRepository.add(firstEmployee);
+
+        databaseRepository.removeById(1);
+
+        assertThat(databaseRepository.getAll()).isEmpty();
     }
 }

@@ -81,13 +81,49 @@ public class DatabaseRepository implements Repository {
     }
 
     @Override
-    public void updateById(int id, Employee employee) {
-        throw new NotImplementedException();
+    public void updateById(Employee employee) {
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.update(employee);
+
+            session.flush();
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            tx.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
-    public void removeById(Employee employee) {
-        throw new NotImplementedException();
+    public void removeById(int id) {
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.remove(getById(id));
+
+            session.flush();
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            tx.rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     public static void openConnection(){
