@@ -13,7 +13,7 @@ public class Employee {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
   @Column(name = "firstName")
@@ -58,7 +58,16 @@ public class Employee {
     this.salary = salary;
   }
 
-//  public Department getDepartment() {
+  @Override
+  public String toString() {
+    return "Employee{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", salary=" + salary +
+            '}';
+  }
+
+  //  public Department getDepartment() {
 //    return department;
 //  }
 //

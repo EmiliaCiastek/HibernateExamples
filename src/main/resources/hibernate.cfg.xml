@@ -12,9 +12,7 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">create</property>
 
-        <!-- List of XML mapping files -->
         <mapping class="Employee"/>
 
-        <!--<mapping resource="Employee.hbm.xml"/>-->
     </session-factory>
 </hibernate-configuration>
